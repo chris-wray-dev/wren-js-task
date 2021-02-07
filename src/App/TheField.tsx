@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import Sheep from './Components/Sheep/SheepCard';
-import AddSheep from './Components/Sheep/AddSheep';
+import SheepModal from './Components/Sheep/SheepModal';
 import CSS from 'csstype';
 import { theFarm } from './Data';
 
 
 const TheField = () => {
-  const [addSheepModal, setAddSheepModal] = useState(false);
+  const [sheepModalOpen, setSheepModalOpen] = useState(false);
   const [farm, setFarm] = useState(theFarm);
 
-  const toggleAddSheepModal = () => {
-    setAddSheepModal(!addSheepModal)
+  const toggleSheepModal = () => {
+    setSheepModalOpen(!sheepModalOpen)
   };
 
   // randomizeFarm = () => {
@@ -21,7 +21,7 @@ const TheField = () => {
   return (
     <div className="container" style={containerStyle}>
       <div className="row">
-        <button type="button" className="btn btn-primary m-2" onClick={toggleAddSheepModal} >Add Sheep</button>
+        <button type="button" className="btn btn-primary m-2" onClick={toggleSheepModal} >Add Sheep</button>
         {/* <button type="button" className="btn btn-primary m-2" onClick={this.randomizeFarm}>Randomize</button> */}
         <button type="button" className="btn btn-primary m-2">Continue to next Season</button>
       </div>
@@ -35,7 +35,7 @@ const TheField = () => {
           )
         })}
       </div>
-      <AddSheep addSheepModal={addSheepModal} toggleAddSheepModal={toggleAddSheepModal} setFarm={setFarm}/>
+      <SheepModal sheepModalOpen={sheepModalOpen} toggleSheepModal={toggleSheepModal} setFarm={setFarm}/>
     </div>
       
   );
