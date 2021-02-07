@@ -1,14 +1,20 @@
 export class Sheep {
   name: string;
-  sex: string;
-  branded: boolean;
+  sex: { label: string, value: string };
+  branded: { label: string, value: boolean };
   lineage: {
     father: string,
     mother: string
   };
   bred: boolean;
 
-  constructor (name: string, sex: string, branded: boolean = false, father: string = "unknown", mother: string = "unkown") {
+  constructor (
+    name: string,
+    sex: { label: string, value: string },
+    branded: { label: string, value: boolean } = { label: "No", value: false },
+    father: string = "unknown",
+    mother: string = "unkown"
+  ) {
     this.name = name;
     this.sex = sex;
     this.branded = branded;
@@ -20,11 +26,11 @@ export class Sheep {
   }
 
   brand = () => {
-    this.branded = true;
+    this.branded = { label: "Yes", value: true };
   }
 
   debrand = () => {
-    this.branded = false;
+    this.branded = { label: "No", value: false };
   }
 
   rename = (name: string) => {
@@ -48,15 +54,27 @@ export class Farm {
   }
 
   breedSheep = (father: Sheep, mother: Sheep) => {
-    const sex: string = Math.random() > 0.5 ? "male" : "female";  // assume 50/50 chance of male/female
-    const babySheep = new Sheep("unknown", sex, false, father.name, mother.name);
+    const sex: { label: string, value: string } = Math.random() > 0.5 
+      ? { label: "Female", value: "female" } 
+      : { label: "Male", value: "male" };  // assume 50/50 chance of male/female
+    const babySheep = new Sheep("unknown", sex, { label: "No", value: false }, father.name, mother.name);
     this.addSheep(babySheep);
   }
 
   rollSeason = () => {
     // split flock into male and female
-    const maleFlock: Array<Sheep> = this.flock.filter(sheep => sheep.sex === "male");
-    const femaleFlock: Array<Sheep> = this.flock.filter(sheep => sheep.sex === "female");
+    const maleFlock: Array<Sheep> = this.flock.filter(sheep => {
+      if (sheep.sex) {
+        return sheep.sex.value === "male"
+      }
+      return false
+    });
+    const femaleFlock: Array<Sheep> = this.flock.filter(sheep => {
+      if (sheep.sex) {
+        return sheep.sex.value === "female"
+      }
+      return false
+    });
 
     // mark all female sheep as 'not bred'
     femaleFlock.map(female => {
@@ -68,7 +86,7 @@ export class Farm {
 
     maleFlock.forEach(male => {
       femaleFlock.forEach((female, i) => {
-        if (!female.bred && !female.branded) {
+        if (!female.bred && !female.branded.value) {
           // set success as 50/50
           const success: boolean = Math.random() > 0.5 ? true : false;
 
@@ -90,11 +108,11 @@ export class Farm {
 export const theFarm = new Farm (
   "Chris' Farm",
   [
-    new Sheep('Sheep 1', 'female', false),
-    new Sheep('Sheep 2', 'female', true),
-    new Sheep('Sheep 3', 'male', false),
-    new Sheep('Sheep 4', 'female', false),
-    new Sheep('Sheep 5', 'female', true),
-    new Sheep('Sheep 6', 'female', true)
+    new Sheep('Sheep 1', { label: "Female", value: "female" }, { label: "No", value: false }),
+    new Sheep('Sheep 2', { label: "Female", value: "female" }, { label: "No", value: false }),
+    new Sheep('Sheep 3', { label: "Female", value: "female" }, { label: "No", value: false }),
+    new Sheep('Sheep 4', { label: "Female", value: "female" }, { label: "No", value: false }),
+    new Sheep('Sheep 5', { label: "Female", value: "female" }, { label: "No", value: false }),
+    new Sheep('Sheep 6', { label: "Female", value: "female" }, { label: "No", value: false })
   ]
-)
+);

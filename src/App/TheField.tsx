@@ -4,7 +4,6 @@ import SheepModal from './Components/Sheep/SheepModal';
 import CSS from 'csstype';
 import { theFarm } from './Data';
 
-
 const TheField = () => {
   const [sheepModalOpen, setSheepModalOpen] = useState(false);
   const [farm, setFarm] = useState(theFarm);
@@ -13,16 +12,10 @@ const TheField = () => {
     setSheepModalOpen(!sheepModalOpen)
   };
 
-  // randomizeFarm = () => {
-  //   const randomFarm = this.state.farm;
-  //   randomFarm.flock = this.state.farm.flock.sort(() => Math.random() - 0.5)
-  //   this.setState({ farm: randomFarm });
-  // }
   return (
     <div className="container" style={containerStyle}>
       <div className="row">
         <button type="button" className="btn btn-primary m-2" onClick={toggleSheepModal} >Add Sheep</button>
-        {/* <button type="button" className="btn btn-primary m-2" onClick={this.randomizeFarm}>Randomize</button> */}
         <button type="button" className="btn btn-primary m-2">Continue to next Season</button>
       </div>
       <div className="row">

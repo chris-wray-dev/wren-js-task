@@ -16,7 +16,7 @@ const SheepCard = (props:Props) => {
       </div>
       <div className="card-body p-1" style={cardBodyStyle}>
         {/* using string litereal to represent the sheep icon */}
-        <img src={`/public/images/${sheep.sex}${sheep.branded ? '-branded' : ''}.png`} alt="sheep icon" style={iconStyle}/>
+        <img src={`/public/images/${sheep.sex.value}${sheep.branded ? '-branded' : ''}.png`} alt="sheep icon" style={iconStyle}/>
       </div>
     </div>
   );

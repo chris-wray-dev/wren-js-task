@@ -2,9 +2,7 @@ import React, { Dispatch, SetStateAction} from 'react';
 import { 
   Modal,
   ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button 
+  ModalBody
 } from "reactstrap";
 import { Farm } from '../../Data';
 import SheepForm from './SheepForm';
@@ -23,10 +21,6 @@ const SheepModal = (props: Props) => {
       <ModalBody>
         <SheepForm name={``} sex={``} branded={``}/>
       </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={toggleSheepModal}>Add Sheep</Button>{' '}
-        <Button color="secondary" onClick={toggleSheepModal}>Cancel</Button>
-      </ModalFooter>
     </Modal>
   );
 };

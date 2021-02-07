@@ -22,11 +22,13 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "@types/react-select": "^4.0.13",
     "bootstrap": "^4.3.1",
     "formik": "^1.5.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-flip-move": "^3.0.4",
+    "react-select": "^4.1.0",
     "reactstrap": "^8.9.0",
     "yup": "^0.32.8"
   }
