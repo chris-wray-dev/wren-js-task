@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { withFormik, FormikProps, Form, Field } from 'formik';
 
 import Select from 'react-select';
+import { Sheep } from '../../Data';
 
 interface Sex {
   label: string;
@@ -52,6 +53,7 @@ const InnerForm = (props: FormikProps<FormValues>) => {
       <div className="form-group">
         <label>Sex</label><br />
         <FormikSelect
+          value={values.sex}
           name="sex"
           onChange={setFieldValue}
           onBlur={setFieldTouched}
@@ -69,6 +71,7 @@ const InnerForm = (props: FormikProps<FormValues>) => {
       <div className="form-group">
         <label>Branded</label><br />
         <FormikSelect
+          value={values.branded}
           name="branded"
           onChange={setFieldValue}
           onBlur={setFieldTouched}
@@ -84,7 +87,7 @@ const InnerForm = (props: FormikProps<FormValues>) => {
         ) : null}
       </div>
 
-      <button className="btn btn-primary" type="submit">Add Sheep</button>{' '}
+      <button className="btn btn-primary" type="submit">Submit</button>{' '}
       <button className="btn btn-secondary">Cancel</button>
     </Form>
   );
@@ -96,53 +99,50 @@ interface Options {
 }
 
 interface FormikSelectProps {
+  value: Sex | Branded;
+  name: string
   onChange: Function;
   onBlur: Function;
   options: Array<Options>
-  name: string
 }
 
 class FormikSelect extends React.Component<FormikSelectProps, any> {
-  handleChange = (value: Sex | Branded | null ) => {
-    this.props.onChange(value);
-  };
-  
-  handleBlur = () => {
-    this.props.onBlur(true);
-  };
   
   render() {
     return (
       <Select
-        name={this.props.name}
+        value={this.props.value}
         options={this.props.options}
-        onChange={this.handleChange}
-        onBlur={this.handleBlur}
+        onChange={value => this.props.onChange(this.props.name, value)}
+        onBlur={() => this.props.onBlur(true)}
       />
     );
   }
 }
 
 interface Props {
-  name: string;
-  sex: { label: string, value: string };
-  branded: { label: string, value: boolean };
+  sheep: Sheep | null;
+  toggleSheepModal: (event: React.MouseEvent<HTMLButtonElement>) => void,
+  submitSheep: Function;
+  index: number;
 }
 
 const SheepForm = withFormik<Props, FormValues>({
   mapPropsToValues: props => {
     return {
-      name: props.name || '',
-      sex: props.sex,
-      branded: props.branded,
+      name: props.sheep ? props.sheep.name : "",
+      sex: props.sheep ? props.sheep.sex : { label: "Female", value: "female" },
+      branded: props.sheep ? props.sheep.branded : { label: "No", value: false }
     };
   },
 
   validationSchema: sheepSchema,
 
-  handleSubmit: values => {
+  handleSubmit: (values, { props }) => {
     console.log(values);
-  },
+    props.submitSheep(values, props.index);
+  }
+  
 })(InnerForm);
 
 export default SheepForm;

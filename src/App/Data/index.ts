@@ -10,10 +10,10 @@ export class Sheep {
 
   constructor (
     name: string,
-    sex: { label: string, value: string },
+    sex: { label: string, value: string } = { label: "Female", value: "female" },
     branded: { label: string, value: boolean } = { label: "No", value: false },
     father: string = "unknown",
-    mother: string = "unkown"
+    mother: string = "unknown"
   ) {
     this.name = name;
     this.sex = sex;
@@ -51,6 +51,7 @@ export class Farm {
 
   addSheep = (sheep: Sheep) => {
     this.flock.push(sheep);
+    this.flock = [...this.flock];
   }
 
   breedSheep = (father: Sheep, mother: Sheep) => {
@@ -63,6 +64,7 @@ export class Farm {
 
   rollSeason = () => {
     // split flock into male and female
+    // console.log(this)
     const maleFlock: Array<Sheep> = this.flock.filter(sheep => {
       if (sheep.sex) {
         return sheep.sex.value === "male"
@@ -100,7 +102,8 @@ export class Farm {
     });
 
     // increment season number
-    this.season++
+    this.season = this.season + 1
+    return this;
   }
 }
 

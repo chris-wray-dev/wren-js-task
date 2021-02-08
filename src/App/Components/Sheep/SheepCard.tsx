@@ -1,14 +1,19 @@
 import React from 'react';
 import CSS from 'csstype';
-import { Sheep } from '../../Data'
+import { Sheep } from '../../Data';
 
 // set the expected props
 interface Props {
-  sheep: Sheep
+  toggleSheepModal: (event: React.MouseEvent<HTMLButtonElement>) => void,
+  submitSheep: Function;
+  sheep: Sheep;
+  index: number;
+  setSelectedSheep: Function
+  setSelectedSheepIndex: Function
 }
 
 const SheepCard = (props:Props) => {
-  const sheep:Sheep = props.sheep;
+  const { toggleSheepModal, setSelectedSheep, setSelectedSheepIndex, sheep, index } = props;
   return (
     <div className="card text-white bg-dark text-center m-1">
       <div className="card-header">
@@ -16,8 +21,13 @@ const SheepCard = (props:Props) => {
       </div>
       <div className="card-body p-1" style={cardBodyStyle}>
         {/* using string litereal to represent the sheep icon */}
-        <img src={`/public/images/${sheep.sex.value}${sheep.branded ? '-branded' : ''}.png`} alt="sheep icon" style={iconStyle}/>
+        <img src={`/public/images/${sheep.sex.value}${sheep.branded.value ? '-branded' : ''}.png`} alt="sheep icon" style={iconStyle}/>
       </div>
+      <button type="button" className="btn btn-primary m-2" onClick={(e) => {
+        setSelectedSheep(sheep);
+        setSelectedSheepIndex(index);
+        toggleSheepModal(e);
+      }} >Edit Sheep</button>
     </div>
   );
 };

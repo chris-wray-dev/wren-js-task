@@ -1,25 +1,28 @@
-import React, { Dispatch, SetStateAction} from 'react';
+import React from 'react';
 import { 
   Modal,
   ModalHeader,
   ModalBody
 } from "reactstrap";
-import { Farm } from '../../Data';
+import { Sheep } from '../../Data';
 import SheepForm from './SheepForm';
 
 interface Props {
   sheepModalOpen: boolean,
   toggleSheepModal: (event: React.MouseEvent<HTMLButtonElement>) => void,
-  setFarm: Dispatch<SetStateAction<Farm>>;
+  submitSheep: Function;
+  sheep: Sheep | null;
+  index: number;
 }
 
 const SheepModal = (props: Props) => {
-  const { sheepModalOpen, toggleSheepModal } = props;
+  const { sheepModalOpen, toggleSheepModal, submitSheep, sheep, index } = props;
+  console.log(sheep);
   return (
     <Modal isOpen={sheepModalOpen} toggle={toggleSheepModal}>
-      <ModalHeader toggle={toggleSheepModal}>Add A Sheep</ModalHeader>
+      <ModalHeader toggle={toggleSheepModal}>{sheep ? `Edit` : `Add`} sheep</ModalHeader>
       <ModalBody>
-        <SheepForm name={``} sex={``} branded={``}/>
+        <SheepForm sheep={sheep} toggleSheepModal={toggleSheepModal} submitSheep={submitSheep} index={index}/>
       </ModalBody>
     </Modal>
   );
