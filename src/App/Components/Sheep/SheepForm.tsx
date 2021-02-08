@@ -22,6 +22,7 @@ interface FormValues {
   branded: Branded
 }
 
+// set schema with validation
 export const sheepSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Please enter at lease two characters.")
@@ -131,15 +132,14 @@ const SheepForm = withFormik<Props, FormValues>({
   mapPropsToValues: props => {
     return {
       name: props.sheep ? props.sheep.name : "",
-      sex: props.sheep ? props.sheep.sex : { label: "Female", value: "female" },
-      branded: props.sheep ? props.sheep.branded : { label: "No", value: false }
+      sex: props.sheep ? props.sheep.sex : { label: "Female", value: "female" },  // default to female 
+      branded: props.sheep ? props.sheep.branded : { label: "No", value: false }  // default to unbranded
     };
   },
 
   validationSchema: sheepSchema,
 
   handleSubmit: (values, { props }) => {
-    console.log(values);
     props.submitSheep(values, props.index);
   }
   
