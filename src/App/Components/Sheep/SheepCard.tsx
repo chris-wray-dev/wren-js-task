@@ -1,6 +1,6 @@
 import React from 'react';
 import CSS from 'csstype';
-import { Sheep } from '../../Data';
+import { Sheep } from '../../Data/Sheep';
 
 // set the expected props
 interface Props {
@@ -23,6 +23,8 @@ const SheepCard = (props:Props) => {
         {/* using string litereal to represent the sheep icon */}
         <img src={`/public/images/${sheep.sex.value}${sheep.branded.value ? '-branded' : ''}.png`} alt="sheep icon" style={iconStyle}/>
       </div>
+      <p>Mum: { sheep.lineage.mother }<br />
+        Dad: { sheep.lineage.father }</p>
       <button type="button" className="btn btn-primary m-2" onClick={(e) => {
         setSelectedSheep(sheep);
         setSelectedSheepIndex(index);

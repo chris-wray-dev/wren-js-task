@@ -4,7 +4,7 @@ import {
   ModalHeader,
   ModalBody
 } from "reactstrap";
-import { Sheep } from '../../Data';
+import { Sheep } from '../../Data/Sheep';
 import SheepForm from './SheepForm';
 
 interface Props {
@@ -17,7 +17,6 @@ interface Props {
 
 const SheepModal = (props: Props) => {
   const { sheepModalOpen, toggleSheepModal, submitSheep, sheep, index } = props;
-  console.log(sheep);
   return (
     <Modal isOpen={sheepModalOpen} toggle={toggleSheepModal}>
       <ModalHeader toggle={toggleSheepModal}>{sheep ? `Edit` : `Add`} sheep</ModalHeader>

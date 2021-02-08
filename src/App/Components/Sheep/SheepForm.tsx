@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { withFormik, FormikProps, Form, Field } from 'formik';
 
 import Select from 'react-select';
-import { Sheep } from '../../Data';
+import { Sheep } from '../../Data/Sheep';
 
 interface Sex {
   label: string;
@@ -87,8 +87,8 @@ const InnerForm = (props: FormikProps<FormValues>) => {
         ) : null}
       </div>
 
-      <button className="btn btn-primary" type="submit">Submit</button>{' '}
-      <button className="btn btn-secondary">Cancel</button>
+      <button className="btn btn-primary m-1" type="submit">Submit</button>
+      <button className="btn btn-secondary m-1">Cancel</button>
     </Form>
   );
 };

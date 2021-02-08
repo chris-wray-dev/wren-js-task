@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SheepCard from './Components/Sheep/SheepCard';
 import SheepModal from './Components/Sheep/SheepModal';
 import CSS from 'csstype';
-import { theFarm, Sheep } from './Data';
+import { theFarm, Sheep } from './Data/Sheep';
 
 const TheField = () => {
   const [sheepModalOpen, setSheepModalOpen] = useState(false);
@@ -31,17 +31,23 @@ const TheField = () => {
   }
 
   const submitSheep = (values: FormValues, index: number = -1) => {
-    const newSheep = new Sheep(values.name, values.sex, values.branded);
+
+    // if index greater than -1 edit sheep
     if (index > -1) {
       farm.flock[selectedSheepIndex].name = values.name;
       farm.flock[selectedSheepIndex].sex = values.sex;
       farm.flock[selectedSheepIndex].branded = values.branded;
     } else {
+      //if index = -1 then add sheep
+      const newSheep = new Sheep(values.name, values.sex, values.branded);
       farm.flock.push(newSheep)
     }    
-    setFarm(farm);
-    setSelectedSheep(null);
+    setFarm({...farm});
+
+    // reset selectedSheep
+    setSelectedSheep(null); 
     setSelectedSheepIndex(-1);
+    
     toggleSheepModal();
   }
 
@@ -52,7 +58,7 @@ const TheField = () => {
 
   return (
     <div className="container" style={containerStyle}>
-      <h3>{`${farm.name}, season ${farm.season}`}</h3>
+      <h3>{`${farm.name} Season ${farm.season}`}</h3>
       <div className="row">
         <button type="button" className="btn btn-primary m-2" onClick={toggleSheepModal} >Add Sheep</button>
         <button type="button" className="btn btn-primary m-2" onClick={rollSeason}>Continue to next Season</button>
@@ -61,7 +67,7 @@ const TheField = () => {
         {/* map through flock to represent each sheep */}
         { farm.flock.map((sheep, index) => {
           return (
-            <div className="col-4 col-md-3 col-lg-2" key={sheep.name}>
+            <div className="col-4 col-md-3 col-lg-2" key={`sheep${index}`}>
               <SheepCard sheep={sheep} toggleSheepModal={toggleSheepModal} submitSheep={submitSheep} index={index} setSelectedSheepIndex={setSelectedSheepIndex} setSelectedSheep={setSelectedSheep}/>
             </div>
           )
@@ -75,8 +81,7 @@ const TheField = () => {
 
 const containerStyle: CSS.Properties = {
   backgroundColor: '#27AE60',
-  padding: '50px',
-  height: '100vh'
+  padding: '50px'
 }
 
 export default TheField;

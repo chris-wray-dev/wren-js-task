@@ -71,15 +71,14 @@ export class Farm {
       }
       return false
     });
-    const femaleFlock: Array<Sheep> = this.flock.filter(sheep => {
+    let femaleFlock: Array<Sheep> = this.flock.filter(sheep => {
       if (sheep.sex) {
         return sheep.sex.value === "female"
       }
       return false
     });
 
-    // mark all female sheep as 'not bred'
-    femaleFlock.map(female => {
+    femaleFlock = femaleFlock.map(female => {
       return {
         ...female,
         bred: false
@@ -87,18 +86,19 @@ export class Farm {
     });
 
     maleFlock.forEach(male => {
-      femaleFlock.forEach((female, i) => {
-        if (!female.bred && !female.branded.value) {
-          // set success as 50/50
-          const success: boolean = Math.random() > 0.5 ? true : false;
-
-          if (success) {
-            this.breedSheep(male, female);
-            femaleFlock[i].bred = true;
+      if (!male.branded.value) {
+        femaleFlock.forEach((female, i) => {
+          if (!female.bred && !female.branded.value) {
+            // set success as 50/50
+            const success: boolean = Math.random() > 0.5 ? true : false;
+  
+            if (success) {
+              this.breedSheep(male, female);
+              femaleFlock[i].bred = true;
+            }
           }
-
-        }
-      });
+        });
+      }
     });
 
     // increment season number
@@ -109,13 +109,8 @@ export class Farm {
 
 // test data
 export const theFarm = new Farm (
-  "Chris' Farm",
+  "Wren Farm",
   [
-    new Sheep('Sheep 1', { label: "Female", value: "female" }, { label: "No", value: false }),
-    new Sheep('Sheep 2', { label: "Female", value: "female" }, { label: "No", value: false }),
-    new Sheep('Sheep 3', { label: "Female", value: "female" }, { label: "No", value: false }),
-    new Sheep('Sheep 4', { label: "Female", value: "female" }, { label: "No", value: false }),
-    new Sheep('Sheep 5', { label: "Female", value: "female" }, { label: "No", value: false }),
-    new Sheep('Sheep 6', { label: "Female", value: "female" }, { label: "No", value: false })
+    new Sheep('Wrenny', { label: "Female", value: "female" }, { label: "No", value: false })
   ]
 );
